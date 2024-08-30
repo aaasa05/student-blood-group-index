@@ -65,6 +65,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['student_code'])) {
             <div class="input-group">
                 <button type="submit">Search</button>
             </div>
+            <div class="footer">
+                <p>Return to <a href="index.php">Student Portal</a></p>
+            </div>
         </form>
 
         <!-- Update Form -->
@@ -86,6 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['student_code'])) {
                 <div class="input-group">
                     <button type="submit">Update Donation Date</button>
                 </div>
+
             </form>
         <?php } ?>
     </div>

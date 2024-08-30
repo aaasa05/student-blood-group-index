@@ -66,7 +66,7 @@
             </div>
             <div class="input-group">
                 <label for="date_of_last_donation">Last Donation</label>
-                <input type="date" id="date_of_last_donation" name="date_of_last_donation" required>
+                <input type="date" id="date_of_last_donation" name="date_of_last_donation">
             </div>
             <div class="input-group">
                 <label for="gender">Gender</label>
@@ -110,6 +110,9 @@
             </div>
             <div class="input-group">
                 <button type="submit">Save Student</button>
+            </div>
+            <div class="footer">
+                <p>Return to <a href="index.php">Student Portal</a></p>
             </div>
         </form>
     </div>

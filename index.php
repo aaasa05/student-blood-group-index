@@ -113,9 +113,14 @@ $result = $conn->query($sql);
                             $age = $now->diff($dob)->y; // Get the difference in years
 
                             // Calculate the number of months since the last donation
-                            $lastDonation = new DateTime($row['date_of_last_donation']);
-                            $monthsSinceDonation = $now->diff($lastDonation)->m + ($now->diff($lastDonation)->y * 12);
+                            if(!empty($row['date_of_last_donation']) && ($row['date_of_last_donation'] != '0000-00-00')){ 
+                                 $lastDonation = new DateTime($row['date_of_last_donation']);
+                                 $monthsSinceDonation = $now->diff($lastDonation)->m + ($now->diff($lastDonation)->y * 12);
 
+                            } else{
+                                $monthsSinceDonation = "no";
+                            }
+                           
 
                             echo "<tr>";
                             echo "<td>" . htmlspecialchars($row['student_code']) . "</td>";

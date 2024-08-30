@@ -63,6 +63,9 @@
             <div class="input-group">
                 <button type="submit" name="submit">Login</button>
             </div>
+            <div class="footer">
+                <p>Return to <a href="../index.php">Student Portal</a></p>
+            </div>
         </form>
     </div>
 </body>
