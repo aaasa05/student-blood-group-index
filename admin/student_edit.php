@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $student_code = $_POST['student_code'];
     $full_name = $_POST['full_name'];
     $date_of_birth = $_POST['date_of_birth'];
+    $date_of_last_donation = $_POST['date_of_last_donation'];
     $gender = $_POST['gender'];
     $blood_group = $_POST['blood_group'];
     $contact_number = $_POST['contact_number'];
@@ -40,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     student_code = '$student_code',
                     full_name = '$full_name',
                     date_of_birth = '$date_of_birth',
+                    date_of_last_donation = '$date_of_last_donation',
                     gender = '$gender',
                     blood_group = '$blood_group',
                     contact_number = '$contact_number',
@@ -85,6 +87,10 @@ $dept_result = $conn->query($dept_sql);
             <input type="date" id="date_of_birth" name="date_of_birth" value="<?php echo $student['date_of_birth']; ?>" required>
         </div>
         <div class="input-group">
+            <label for="date_of_last_donation">Date of Last Donation</label>
+            <input type="date" id="date_of_last_donation" name="date_of_last_donation" value="<?php echo $student['date_of_last_donation']; ?>" required>
+        </div>
+        <div class="input-group">
             <label for="gender">Gender</label>
             <select id="gender" name="gender" required>
                 <option value="Male" <?php if ($student['gender'] == 'Male') echo 'selected'; ?>>Male</option>
@@ -94,7 +100,15 @@ $dept_result = $conn->query($dept_sql);
         </div>
         <div class="input-group">
             <label for="blood_group">Blood Group</label>
-            <input type="text" id="blood_group" name="blood_group" value="<?php echo $student['blood_group']; ?>" required>
+            <select id="blood_group" name="blood_group" required>
+                <?php 
+                $blood_groups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
+                foreach ($blood_groups as $group) { ?>
+                    <option value="<?php echo $group; ?>" <?php echo (!empty($student['blood_group']) && $student['blood_group'] == $group) ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($group); ?>
+                    </option>
+                <?php } ?>
+            </select>
         </div>
         <div class="input-group">
             <label for="contact_number">Contact Number</label>

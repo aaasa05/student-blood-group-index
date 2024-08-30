@@ -87,9 +87,10 @@ $result = $conn->query($sql);
             <table>
                 <thead>
                     <tr>
-                        <th>Student ID</th>
+                        <th>Student Code</th>
                         <th>Full Name</th>
                         <th>Date of Birth</th>
+                        <th>Last Donation</th>
                         <th>Gender</th>
                         <th>Blood Group</th>
                         <th>Contact Number</th>
@@ -106,10 +107,21 @@ $result = $conn->query($sql);
                             $dept_result = $conn->query($dept_sql);
                             $department_name = $dept_result->num_rows > 0 ? $dept_result->fetch_assoc()['department_name'] : 'N/A';
                             
+                            // Calculate the age
+                            $dob = new DateTime($row['date_of_birth']);
+                            $now = new DateTime();
+                            $age = $now->diff($dob)->y; // Get the difference in years
+
+                            // Calculate the number of months since the last donation
+                            $lastDonation = new DateTime($row['date_of_last_donation']);
+                            $monthsSinceDonation = $now->diff($lastDonation)->m + ($now->diff($lastDonation)->y * 12);
+
+
                             echo "<tr>";
-                            echo "<td>" . htmlspecialchars($row['student_id']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['student_code']) . "</td>";
                             echo "<td>" . htmlspecialchars($row['full_name']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['date_of_birth']) . "</td>";
+                            echo "<td>" . htmlspecialchars($age) . " years</td>"; // Display the age
+                            echo "<td>" . htmlspecialchars($monthsSinceDonation) . " months</td>"; // Display the months since donation
                             echo "<td>" . htmlspecialchars($row['gender']) . "</td>";
                             echo "<td>" . htmlspecialchars($row['blood_group']) . "</td>";
                             echo "<td>" . htmlspecialchars($row['contact_number']) . "</td>";
@@ -118,7 +130,7 @@ $result = $conn->query($sql);
                             echo "</tr>";
                         }
                     } else {
-                        echo "<tr><td colspan='8'>No students found</td></tr>";
+                        echo "<tr><td colspan='9'>No students found</td></tr>";
                     }
                     ?>
                 </tbody>

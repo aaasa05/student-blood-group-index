@@ -45,7 +45,7 @@
     <title>Login Form</title>
     <link rel="stylesheet" href="css/login.css">
 </head>
-<body>
+<body class="login-body">
     <div class="login-container">
         <h2>Login</h2>
         <?php if (!empty($login_error)) { ?>

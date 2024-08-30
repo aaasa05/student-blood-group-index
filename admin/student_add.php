@@ -8,6 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $student_code = $_POST['student_code'];
     $full_name = $_POST['full_name'];
     $date_of_birth = $_POST['date_of_birth'];
+    $date_of_last_donation = $_POST['date_of_last_donation'];
     $gender = $_POST['gender'];
     $blood_group = $_POST['blood_group'];
     $contact_number = $_POST['contact_number'];
@@ -18,8 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Validate input
     if (!empty($student_code) && !empty($full_name) && !empty($date_of_birth) && !empty($gender) && !empty($blood_group) && !empty($contact_number) && !empty($email) && !empty($address) && !empty($department_id)) {
         // Insert data into the database
-        $sql = "INSERT INTO students (student_code, full_name, date_of_birth, gender, blood_group, contact_number, email, address, department_id) 
-                VALUES ('$student_code', '$full_name', '$date_of_birth', '$gender', '$blood_group', '$contact_number', '$email', '$address', '$department_id')";
+        $sql = "INSERT INTO students (student_code, full_name, date_of_birth, date_of_last_donation, gender, blood_group, contact_number, email, address, department_id) 
+                VALUES ('$student_code', '$full_name', '$date_of_birth', '$date_of_last_donation', '$gender', '$blood_group', '$contact_number', '$email', '$address', '$department_id')";
 
         if ($conn->query($sql) === TRUE) {
             // Redirect to the student list page (optional)
@@ -57,6 +58,10 @@ $dept_result = $conn->query($dept_sql);
             <input type="date" id="date_of_birth" name="date_of_birth" required>
         </div>
         <div class="input-group">
+            <label for="date_of_last_donation">Date of Last Donation</label>
+            <input type="date" id="date_of_last_donation" name="date_of_last_donation" required>
+        </div>
+        <div class="input-group">
             <label for="gender">Gender</label>
             <select id="gender" name="gender" required>
                 <option value="Male">Male</option>
@@ -66,7 +71,15 @@ $dept_result = $conn->query($dept_sql);
         </div>
         <div class="input-group">
             <label for="blood_group">Blood Group</label>
-            <input type="text" id="blood_group" name="blood_group" required>
+            <select id="blood_group" name="blood_group" required>
+                <?php 
+                $blood_groups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
+                foreach ($blood_groups as $group) { ?>
+                    <option value="<?php echo $group; ?>" <?php echo (!empty($_GET['blood_group']) && $_GET['blood_group'] == $group) ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($group); ?>
+                    </option>
+                <?php } ?>
+            </select>
         </div>
         <div class="input-group">
             <label for="contact_number">Contact Number</label>
