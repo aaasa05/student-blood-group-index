@@ -28,13 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['student_code'])) {
     $sql = "UPDATE students SET date_of_last_donation = '$date_of_last_donation' WHERE student_code = '$student_code'";
     
     if ($conn->query($sql) === TRUE) {
-        $message = "Last donation date updated successfully.";
-        // Refresh student details
-        $sql = "SELECT * FROM students WHERE student_code = '$student_code'";
-        $result = $conn->query($sql);
-        if ($result->num_rows > 0) {
-            $student = $result->fetch_assoc();
-        }
         header("Location: index.php");
     } else {
         $message = "Error updating record: " . $conn->error;
@@ -54,13 +47,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['student_code'])) {
     <div class="update-container">
         <h2>Update Last Donation Date</h2>
         <?php if ($message) { ?>
-            <p><?php echo htmlspecialchars($message); ?></p>
+            <p><?php echo $message; ?></p>
         <?php } ?>
         <!-- Search Form -->
         <form method="GET" action="">
             <div class="input-group">
                 <label for="student_code">Student Code</label>
-                <input type="text" id="student_code" name="student_code" required value="<?php echo isset($student_code) ? htmlspecialchars($student_code) : ''; ?>">
+                <input type="text" id="student_code" name="student_code" required value="<?php echo isset($student_code) ? $student_code : ''; ?>">
             </div>
             <div class="input-group">
                 <button type="submit">Search</button>
@@ -75,17 +68,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['student_code'])) {
             <form method="POST" action="">
                 <div class="input-group">
                     <label for="full_name">Full Name</label>
-                    <input type="text" id="full_name" name="full_name" value="<?php echo htmlspecialchars($student['full_name']); ?>" readonly>
+                    <input type="text" id="full_name" name="full_name" value="<?php echo $student['full_name']; ?>" readonly>
                 </div>
                 <div class="input-group">
                     <label for="contact_number">Contact Number</label>
-                    <input type="tel" id="contact_number" name="contact_number" value="<?php echo htmlspecialchars($student['contact_number']); ?>" readonly>
+                    <input type="tel" id="contact_number" name="contact_number" value="<?php echo $student['contact_number']; ?>" readonly>
                 </div>
                 <div class="input-group">
                     <label for="date_of_last_donation">Last Donation Date</label>
-                    <input type="date" id="date_of_last_donation" name="date_of_last_donation" value="<?php echo htmlspecialchars($student['date_of_last_donation']); ?>" required>
+                    <input type="date" id="date_of_last_donation" name="date_of_last_donation" value="<?php echo $student['date_of_last_donation']; ?>" required>
                 </div>
-                <input type="hidden" name="student_code" value="<?php echo htmlspecialchars($student['student_code']); ?>">
+                <input type="hidden" name="student_code" value="<?php echo $student['student_code']; ?>">
                 <div class="input-group">
                     <button type="submit">Update Donation Date</button>
                 </div>

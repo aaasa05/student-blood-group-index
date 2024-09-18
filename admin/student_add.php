@@ -76,7 +76,7 @@ $dept_result = $conn->query($dept_sql);
                 $blood_groups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
                 foreach ($blood_groups as $group) { ?>
                     <option value="<?php echo $group; ?>" <?php echo (!empty($_GET['blood_group']) && $_GET['blood_group'] == $group) ? 'selected' : ''; ?>>
-                        <?php echo htmlspecialchars($group); ?>
+                        <?php echo $group; ?>
                     </option>
                 <?php } ?>
             </select>

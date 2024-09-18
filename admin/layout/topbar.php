@@ -6,7 +6,7 @@
     <title>Admins</title>
     <link rel="stylesheet" href="css/styles.css">
     <?php
-    require('layout/db_connection.php');
+    require('db_connection.php');
 
     session_start();
     if (empty($_SESSION['isLoggedIn'])) {

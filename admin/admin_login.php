@@ -45,11 +45,11 @@
     <title>Login Form</title>
     <link rel="stylesheet" href="css/login.css">
 </head>
-<body class="login-body">
+<body class="login-body" style="">
     <div class="login-container">
         <h2>Login</h2>
         <?php if (!empty($login_error)) { ?>
-            <p class="error"><?php echo htmlspecialchars($login_error); ?></p>
+            <p class="error"><?php echo $login_error; ?></p>
         <?php } ?>
         <form action="" method="POST">
             <div class="input-group">

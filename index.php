@@ -19,15 +19,19 @@ $blood_groups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
 $whereClauses = [];
 if (!empty($_GET['department_id'])) {
     $department_id = intval($_GET['department_id']);
-    $whereClauses[] = "department_id = $department_id";
+    $whereClauses[] = "students.department_id = $department_id";
 }
 if (!empty($_GET['blood_group'])) {
     $blood_group = $conn->real_escape_string($_GET['blood_group']);
-    $whereClauses[] = "blood_group = '$blood_group'";
+    $whereClauses[] = "students.blood_group = '$blood_group'";
 }
+
 $whereSql = count($whereClauses) > 0 ? 'WHERE ' . implode(' AND ', $whereClauses) : '';
 
-$sql = "SELECT * FROM students $whereSql";
+
+$sql = "SELECT students.*, departments.department_name FROM students LEFT JOIN departments ON (departments.department_id = students.department_id) $whereSql";
+
+
 $result = $conn->query($sql);
 ?>
 
@@ -57,7 +61,7 @@ $result = $conn->query($sql);
                         <option value="">All Departments</option>
                         <?php foreach ($departments as $dept) { ?>
                             <option value="<?php echo $dept['department_id']; ?>" <?php echo (!empty($_GET['department_id']) && $_GET['department_id'] == $dept['department_id']) ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars($dept['department_name']); ?>
+                                <?php echo $dept['department_name']; ?>
                             </option>
                         <?php } ?>
                     </select>
@@ -70,7 +74,7 @@ $result = $conn->query($sql);
                         $blood_groups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
                         foreach ($blood_groups as $group) { ?>
                             <option value="<?php echo $group; ?>" <?php echo (!empty($_GET['blood_group']) && $_GET['blood_group'] == $group) ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars($group); ?>
+                                <?php echo $group; ?>
                             </option>
                         <?php } ?>
                     </select>
@@ -101,12 +105,7 @@ $result = $conn->query($sql);
                 <tbody>
                     <?php
                     if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            // Fetch department name for this student
-                            $dept_sql = "SELECT department_name FROM departments WHERE department_id = " . $row['department_id'];
-                            $dept_result = $conn->query($dept_sql);
-                            $department_name = $dept_result->num_rows > 0 ? $dept_result->fetch_assoc()['department_name'] : 'N/A';
-                            
+                        while ($row = $result->fetch_assoc()) {                            
                             // Calculate the age
                             $dob = new DateTime($row['date_of_birth']);
                             $now = new DateTime();
@@ -123,15 +122,15 @@ $result = $conn->query($sql);
                            
 
                             echo "<tr>";
-                            echo "<td>" . htmlspecialchars($row['student_code']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['full_name']) . "</td>";
-                            echo "<td>" . htmlspecialchars($age) . " years</td>"; // Display the age
-                            echo "<td>" . htmlspecialchars($monthsSinceDonation) . " months</td>"; // Display the months since donation
-                            echo "<td>" . htmlspecialchars($row['gender']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['blood_group']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['contact_number']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['email']) . "</td>";
-                            echo "<td>" . htmlspecialchars($department_name) . "</td>";
+                            echo "<td>" . $row['student_code'] . "</td>";
+                            echo "<td>" . $row['full_name'] . "</td>";
+                            echo "<td>" . $age . " years</td>"; // Display the age
+                            echo "<td>" . $monthsSinceDonation . " months</td>"; // Display the months since donation
+                            echo "<td>" . $row['gender'] . "</td>";
+                            echo "<td>" . $row['blood_group'] . "</td>";
+                            echo "<td>" . $row['contact_number'] . "</td>";
+                            echo "<td>" . $row['email'] . "</td>";
+                            echo "<td>" . $row['department_name'] . "</td>";
                             echo "</tr>";
                         }
                     } else {

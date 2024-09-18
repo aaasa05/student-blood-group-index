@@ -6,19 +6,24 @@
 }
 
 .login-body {
-    background-color: #f7f7f7;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+
+    background: url('../image/login.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-
 .register-body {
-    background-color: #f7f7f7;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    background: url('../image/login.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 

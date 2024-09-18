@@ -1,4 +1,10 @@
 /* Container and General Styles */
+body {
+    background: url('../image/login.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .container {
     width: 90%;
     max-width: 1200px;

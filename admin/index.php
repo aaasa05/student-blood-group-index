@@ -22,15 +22,15 @@ $conn->close();
 <div class="dashboard-container">
     <div class="dashboard-box">
         <h3>Total Students</h3>
-        <p><?php echo htmlspecialchars($student_count); ?></p>
+        <p><?php echo $student_count; ?></p>
     </div>
     <div class="dashboard-box">
         <h3>Total Admins</h3>
-        <p><?php echo htmlspecialchars($admin_count); ?></p>
+        <p><?php echo $admin_count; ?></p>
     </div>
     <div class="dashboard-box">
         <h3>Total Departments</h3>
-        <p><?php echo htmlspecialchars($department_count); ?></p>
+        <p><?php echo $department_count; ?></p>
     </div>
 </div>
 

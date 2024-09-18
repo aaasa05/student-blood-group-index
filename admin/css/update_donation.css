@@ -7,11 +7,14 @@
 }
 
 .update-donation-body {
-    background-color: #f7f7f7;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+
+    background: url('../image/login.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .update-container {
